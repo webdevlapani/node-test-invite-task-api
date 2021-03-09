@@ -19,7 +19,7 @@ npm run dev
 
 ## Example
 
-- BaseURL: http://localhost:5000/api/v1
+- BaseURL: https://node-test-invite-task-api.herokuapp.com/api/v1
 
 ### Users
 - Search users in database
