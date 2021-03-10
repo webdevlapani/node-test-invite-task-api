@@ -46,17 +46,25 @@ exports.createInvite = asyncHandler(async (req, res, next) => {
   });
 
   if (searchInvite) {
-    return next(
-      new ErrorResponse(`User with id ${req.body.userId} already invited.`, 400)
+    const invite = await Invite.findOneAndUpdate(
+      { userId: req.body.userId },
+      { $set: { isDelete: false } },
+      {
+        new: true,
+        runValidators: true,
+      }
     );
+    res.status(200).json({
+      success: true,
+      data: invite,
+    });
+  } else {
+    const invite = await Invite.create(req.body);
+    res.status(201).json({
+      success: true,
+      data: invite,
+    });
   }
-
-  const invite = await Invite.create(req.body);
-
-  res.status(201).json({
-    success: true,
-    data: invite,
-  });
 });
 
 //@desc Delete invite
